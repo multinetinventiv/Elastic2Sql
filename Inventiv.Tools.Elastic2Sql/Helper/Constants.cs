@@ -1,0 +1,13 @@
+﻿namespace Inventiv.Tools.Elastic2Sql.Helper
+{
+	public static class Constants
+	{
+		public const string DATA_SOURCE ="SqlServer.DataSource";
+		public const string DATABASE_NAME = "SqlServer.InitialCatalog";
+		public const string INTEGRATED_SECURITY = "SqlServer.IntegratedSecurity";
+		public const string USERNAME = "SqlServer.Username";
+		public const string PASSWORD = "SqlServer.Password";
+
+		public const string ELASTIC_SERVER_ADDRESS = "Elastic.ServerAddress";
+	}
+}

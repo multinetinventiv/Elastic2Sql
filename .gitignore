@@ -3,3 +3,10 @@
 ################################################################################
 
 /packages/NUnit.3.5.0
+/packages/Newtonsoft.Json.10.0.3
+/packages/NEST.6.0.0
+/packages/MSTest.TestFramework.1.2.0
+/packages/MSTest.TestAdapter.1.2.0
+/packages/log4net.2.0.8
+/packages/Elasticsearch.Net.6.0.0
+/.vs/Inventiv.Tools.Elastic2Sql/v15/Server/sqlite3
