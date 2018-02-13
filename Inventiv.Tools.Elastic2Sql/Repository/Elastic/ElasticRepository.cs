@@ -22,7 +22,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 			this.indexName = indexName;
 			this.typeName = typeName;
 
-			client = Configuration.GetElasticSearchClient();
+			client = Connection.GetElasticSearchClient();
 		}
 
 		public List<dynamic> GetAll(int takeCount = 100)

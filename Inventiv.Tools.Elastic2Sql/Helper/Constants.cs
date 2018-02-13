@@ -11,5 +11,7 @@
 		public const string ELASTIC_SERVER_ADDRESS = "Elastic.ServerAddress";
 
 		public const string DATETIME_FORMAT = "yyyyMMddHHmm";
+
+		public const string MAPPING_XML_PATH = "/Mappings/Mapping.xml";
 	}
 }

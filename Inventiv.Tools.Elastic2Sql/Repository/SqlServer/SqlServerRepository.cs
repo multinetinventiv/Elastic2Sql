@@ -12,7 +12,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 		public SqlServerRepository(string tableName)
 		{
 			this.tableName = tableName;
-			sqlConnection = Configuration.GetSqlConnection();
+			sqlConnection = Connection.GetSqlConnection();
 		}
 
 		public List<dynamic> GetAll(int takeCount)

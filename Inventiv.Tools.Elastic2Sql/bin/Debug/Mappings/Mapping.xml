@@ -1,0 +1,27 @@
+﻿<elastic2sql>
+	<Elastic>
+		<Index>
+			<Name>framework_dev_0</Name>
+		</Index>
+		<Type>
+			<Name>message</Name>
+			<Columns>
+				<Column>
+					<Name>service_name</Name>
+				</Column>
+				<Column>
+					<Name>service_request_id</Name>
+				</Column>
+				<Column>
+					<Name>timestamp</Name>
+				</Column>
+				<Column>
+					<Name>duration</Name>
+				</Column>
+				<Column>
+					<Name>result</Name>
+				</Column>
+			</Columns>
+		</Type>
+	</Elastic>
+</elastic2sql>

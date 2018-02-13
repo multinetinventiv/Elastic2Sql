@@ -9,7 +9,7 @@ using Nest;
 
 namespace Inventiv.Tools.Elastic2Sql
 {
-	public static class Configuration
+	public static class Connection
 	{
 		#region Fields
 

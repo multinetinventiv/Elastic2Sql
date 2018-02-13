@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Connection.cs" />
     <Compile Include="DataTransporter\DataTransporter.cs" />
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Program.cs" />
@@ -80,6 +80,7 @@
     <Compile Include="Repository\SqlServer\SqlQueryBuilder.cs" />
     <Compile Include="Repository\SqlServer\SqlServerRepository.cs" />
     <Compile Include="DataTransporter\IDataTransporter.cs" />
+    <Compile Include="XmlReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -87,6 +88,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mappings\Mapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
