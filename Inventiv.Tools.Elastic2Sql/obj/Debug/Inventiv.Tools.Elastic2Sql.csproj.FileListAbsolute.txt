@@ -1,0 +1,17 @@
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\obj\Debug\Inventiv.Tools.Elastic2Sql.csproj.CoreCompileInputs.cache
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\log4net.config
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\elastic2sql.exe.config
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\elastic2sql.exe
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\elastic2sql.pdb
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Elasticsearch.Net.dll
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\log4net.dll
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Nest.dll
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Newtonsoft.Json.dll
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Elasticsearch.Net.xml
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\log4net.xml
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Nest.xml
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Newtonsoft.Json.xml
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\obj\Debug\elastic2sql.exe
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\obj\Debug\elastic2sql.pdb
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Microsoft.Extensions.CommandLineUtils.dll
+D:\GIT\Inventiv.Tools.Elastic2Sql\Inventiv.Tools.Elastic2Sql\bin\Debug\Microsoft.Extensions.CommandLineUtils.xml

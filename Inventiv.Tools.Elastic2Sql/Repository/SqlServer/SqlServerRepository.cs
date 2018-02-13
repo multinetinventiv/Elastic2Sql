@@ -59,7 +59,11 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 
 		public void Insert(List<string> columnNames, params object[] values)
 		{
-			throw new System.NotImplementedException();
+			var insertQuery = SqlQueryBuilder.BuildInsertQuery(columnNames, tableName);
+			var parameters = SqlQueryBuilder.BuildInsertParameters(columnNames, values);
+
+			var command = new SqlCommand(insertQuery, sqlConnection);
+			//TODO
 		}
 
 		public void Update(List<string> columnNames, params object[] values)

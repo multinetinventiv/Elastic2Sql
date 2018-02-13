@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Inventiv.Tools.Elastic2Sql</RootNamespace>
     <AssemblyName>elastic2sql</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -44,6 +44,9 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Extensions.CommandLineUtils, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.CommandLineUtils.1.1.1\lib\net451\Microsoft.Extensions.CommandLineUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Nest, Version=6.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\NEST.6.0.0\lib\net45\Nest.dll</HintPath>
     </Reference>
@@ -61,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="DataTransporter\DataTransporter.cs" />
     <Compile Include="Helper\Constants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="Repository\QueryInfo.cs" />
     <Compile Include="Repository\SqlServer\SqlQueryBuilder.cs" />
     <Compile Include="Repository\SqlServer\SqlServerRepository.cs" />
+    <Compile Include="DataTransporter\IDataTransporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

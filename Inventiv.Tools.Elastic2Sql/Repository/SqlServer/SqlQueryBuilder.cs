@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,42 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 			}
 
 			return list;
+		}
+
+		public static string BuildInsertQuery(List<string> columns, string tableName)
+		{
+			var dbColumns = string.Empty;
+			var parameters = string.Empty;
+
+			for (var index = 0; index < columns.Count; index++)
+			{
+				if (index != 0)
+				{
+					dbColumns += ", ";
+					parameters += ", ";
+				}
+
+				dbColumns += columns[index];
+				parameters += $"@{columns[index]}";
+			}
+
+			return $"INSERT INTO {tableName} ({dbColumns}) VALUES ({parameters})";
+		}
+
+		public static List<SqlParameter> BuildInsertParameters(List<string> columnNames, object[] values)
+		{
+			//var parameters = new List<SqlParameter>();
+
+			//for (var index = 0; index < columnNames.Count; index++)
+			//{
+			//	parameters.Add(new SqlParameter
+			//	{
+			//		 ParameterName = $"@{columnNames[index]}",
+			//		  DbType = DbType.
+			//	});
+			//}
+
+			throw new System.NotImplementedException();
 		}
 	}
 }

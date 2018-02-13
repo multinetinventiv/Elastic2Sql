@@ -9,5 +9,7 @@
 		public const string PASSWORD = "SqlServer.Password";
 
 		public const string ELASTIC_SERVER_ADDRESS = "Elastic.ServerAddress";
+
+		public const string DATETIME_FORMAT = "yyyyMMddHHmm";
 	}
 }
