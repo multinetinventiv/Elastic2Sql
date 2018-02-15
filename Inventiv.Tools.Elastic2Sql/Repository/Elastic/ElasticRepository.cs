@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Dynamic;
+using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
+using Inventiv.Tools.Elastic2Sql.Query;
 using Nest;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
@@ -9,18 +10,15 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 	public class ElasticRepository : IRepository
 	{
 		private readonly ElasticClient client;
+		private readonly IDatabaseInformation databaseInformation;
 		private readonly string indexName;
 		private readonly string typeName;
 
-		public ElasticRepository(string indexName, string typeName)
+		public ElasticRepository(IDatabaseInformation databaseInformation)
 		{
-			if (string.IsNullOrWhiteSpace(indexName) || string.IsNullOrWhiteSpace(typeName))
-			{
-				throw new ArgumentNullException($"Index name or type name are empty! (indexName = {indexName}, typeName = {typeName})");
-			}
-
-			this.indexName = indexName;
-			this.typeName = typeName;
+			this.databaseInformation = databaseInformation;
+			indexName = databaseInformation.DatabaseName;
+			typeName = databaseInformation.TableName;
 
 			client = Connection.GetElasticSearchClient();
 		}
@@ -43,7 +41,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 			return new List<dynamic>(searchResponse.Documents);
 		}
 
-		public List<object> Get(List<QueryInfo> queryInformation, int takeCount = 100)
+		public List<object> Get(List<QueryInfo> queryInformation, int takeCount = 100, params object[] values)
 		{
 			var searchResponse = client.Search<dynamic>(s => s
 				.Index(indexName)
@@ -51,7 +49,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 				.From(0)
 				.Size(takeCount)
 				.Query(q =>
-					q.BuildQuery(queryInformation)
+					q.BuildQuery(queryInformation,values)
 				)
 			);
 
@@ -64,6 +62,11 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 			}
 
 			return new List<dynamic>(searchResponse.Documents);
+		}
+
+		public List<object> Get(int takeCount = 100, params object[] values)
+		{
+			return Get(databaseInformation.Queries, takeCount, values);
 		}
 
 		public void Insert(List<string> columnNames, params object[] values)
@@ -92,4 +95,5 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 		}
 
 	}
+
 }

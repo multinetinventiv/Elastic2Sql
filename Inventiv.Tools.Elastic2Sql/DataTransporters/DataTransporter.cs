@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Inventiv.Tools.Elastic2Sql.Repository;
 using log4net;
@@ -20,12 +19,12 @@ namespace Inventiv.Tools.Elastic2Sql.DataTransporters
 		{
 			try
 			{
-				
+				var sourceValues = sourceRepository.Get(dataCount, startDate, endDate);
 
 			}
 			catch (Exception e)
 			{
-				logger.Error("When transporting data throws exception", e);
+				logger.Error("When transporting data thrown exception", e);
 				throw;
 			}
 		}

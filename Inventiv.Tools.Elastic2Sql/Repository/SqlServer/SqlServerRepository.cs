@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using Inventiv.Tools.Elastic2Sql.Query;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 {
@@ -20,7 +21,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 			throw new System.NotImplementedException();
 		}
 
-		public List<object> Get(List<QueryInfo> queryInformation, int takeCount)
+		public List<object> Get(List<QueryInfo> queryInformation, int takeCount, params object[] values)
 		{
 			var queryString = SqlQueryBuilder.BuildSelectQuery(queryInformation, tableName);
 			var parameters = SqlQueryBuilder.BuildSqlParameters(queryInformation);
@@ -33,7 +34,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 				sqlConnection.Open();
 
 				var reader = command.ExecuteReader();
-				var values = new List<object>();
+				var rows = new List<object>();
 
 				while (reader.Read())
 				{
@@ -41,13 +42,13 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 
 					reader.GetValues(row);
 
-					values.Add(row);
+					rows.Add(row);
 				}
 
 				reader.Close();
 				sqlConnection.Close();
 
-				return values;
+				return rows;
 			}
 			catch (Exception)
 			{
@@ -55,6 +56,11 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 				throw;
 			}
 
+		}
+
+		public List<object> Get(int takeCount = 100, params object[] values)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Insert(List<string> columnNames, params object[] values)

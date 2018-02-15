@@ -1,18 +1,19 @@
 ﻿using System;
+using Inventiv.Tools.Elastic2Sql.Query;
 using Inventiv.Tools.Elastic2Sql.Repository.Elastic.QueryContainers;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 {
 	public class QueryContainerFactory
 	{
-		public IQueryContainer CreateQueryContainer(QueryContainerType type)
+		public IQueryContainer CreateQueryContainer(QueryType type)
 		{
 			switch (type)
 			{
-				case QueryContainerType.Match:
+				case QueryType.Match:
 					return new MatchQueryContainer();
 
-				case QueryContainerType.DateRange:
+				case QueryType.DateRange:
 					return new DateRangeQueryContainer();
 
 				default:

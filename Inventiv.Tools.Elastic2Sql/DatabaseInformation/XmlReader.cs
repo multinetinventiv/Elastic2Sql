@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Xml.Linq;
-using System.Collections;
-using System.IO;
 
-namespace Inventiv.Tools.Elastic2Sql
+namespace Inventiv.Tools.Elastic2Sql.DatabaseInformation
 {
 	public class XmlReader : DynamicObject, IEnumerable
 	{

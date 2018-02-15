@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿using Inventiv.Tools.Elastic2Sql.Query;
+using Nest;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 {

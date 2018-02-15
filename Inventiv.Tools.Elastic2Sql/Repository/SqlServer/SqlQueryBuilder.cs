@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Inventiv.Tools.Elastic2Sql.Query;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 {

@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Globalization;
-using System.Reflection;
+using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 using Inventiv.Tools.Elastic2Sql.DataTransporters;
 using Inventiv.Tools.Elastic2Sql.Helper;
 using Inventiv.Tools.Elastic2Sql.Repository;
 using Inventiv.Tools.Elastic2Sql.Repository.Elastic;
-using log4net;
 using Microsoft.Extensions.CommandLineUtils;
 
 namespace Inventiv.Tools.Elastic2Sql
 {
 	public class Program
 	{
-
-		#region Fields
-
-		private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 		private readonly CommandLineApplication application;
-
-		#endregion
 
 		public static void Main(string[] args)
 		{
-			dynamic xmlReader = new XmlReader($".{Constants.MAPPING_XML_PATH}");
-			var sourceRepository = new ElasticRepository(xmlReader.Elastic.Index.Name.Value, xmlReader.Elastic.Type.Name.Value);
+			var sourceDatabaseInformation = new DatabaseInformationByXml($".{Constants.MAPPING_XML_PATH}", RootNodeName.Elastic);
+			var sourceRepository = new ElasticRepository(sourceDatabaseInformation);
 
 			new Program(
 				sourceRepository
@@ -60,7 +53,7 @@ namespace Inventiv.Tools.Elastic2Sql
 			if (args.Length != 3
 				|| !DateTime.TryParseExact(args[0], Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dummyDate)
 				|| !DateTime.TryParseExact(args[1], Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture, DateTimeStyles.None, out dummyDate)
-				|| int.TryParse(args[2], out int _)
+				|| !int.TryParse(args[2], out int _)
 				)
 			{
 				application.ShowHelp();
@@ -71,7 +64,7 @@ namespace Inventiv.Tools.Elastic2Sql
 			{
 				return application.Execute(args);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				application.ShowHelp();
 				return 1;

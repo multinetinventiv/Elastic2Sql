@@ -1,9 +1,9 @@
 ﻿<elastic2sql>
 	<Elastic>
-		<Index>
+		<Database>
 			<Name>framework_dev_0</Name>
-		</Index>
-		<Type>
+		</Database>
+		<Table>
 			<Name>message</Name>
 			<Columns>
 				<Column>
@@ -22,6 +22,17 @@
 					<Name>result</Name>
 				</Column>
 			</Columns>
-		</Type>
+			<Queries>
+				<Query>
+					<ColumnName>timestamp</ColumnName>
+					<ColumnValues>
+						<ColumnValue>{0}</ColumnValue>
+						<ColumnValue>{1}</ColumnValue>
+					</ColumnValues>
+					<QueryType>DateRange</QueryType>
+				</Query>
+			</Queries>
+		</Table>
 	</Elastic>
+	<Sql></Sql>
 </elastic2sql>

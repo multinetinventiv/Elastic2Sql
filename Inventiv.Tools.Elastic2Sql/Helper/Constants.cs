@@ -1,4 +1,6 @@
-﻿namespace Inventiv.Tools.Elastic2Sql.Helper
+﻿using System;
+
+namespace Inventiv.Tools.Elastic2Sql.Helper
 {
 	public static class Constants
 	{
@@ -10,7 +12,7 @@
 
 		public const string ELASTIC_SERVER_ADDRESS = "Elastic.ServerAddress";
 
-		public const string DATETIME_FORMAT = "yyyyMMddHHmm";
+		public const string DATETIME_FORMAT = "yyyyMMddHHmmss";
 
 		public const string MAPPING_XML_PATH = "/Mappings/Mapping.xml";
 	}
