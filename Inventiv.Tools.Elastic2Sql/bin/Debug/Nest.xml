@@ -23581,6 +23581,12 @@
             Convenience method to map as much as it can based on <see cref="T:Nest.ElasticsearchTypeAttribute" /> attributes set on the type.
             <pre>This method also automatically sets up mappings for known values types (int, long, double, datetime, etc)</pre><pre>Class types default to object and Enums to int</pre><pre>Later calls can override whatever is set is by this call.</pre></summary>
     </member>
+    <member name="M:Nest.TypeMappingDescriptor`1.AutoMap(System.Type,Nest.IPropertyVisitor,System.Int32)">
+      <summary>
+            Convenience method to map as much as it can based on <see cref="T:Nest.ElasticsearchTypeAttribute" /> attributes set on the type.
+            This particular overload is useful for automapping any children
+            <pre>This method also automatically sets up mappings for known values types (int, long, double, datetime, etc)</pre><pre>Class types default to object and Enums to int</pre><pre>Later calls can override whatever is set is by this call.</pre></summary>
+    </member>
     <member name="M:Nest.TypeMappingDescriptor`1.AutoMap``1(Nest.IPropertyVisitor,System.Int32)">
       <summary>
             Convenience method to map as much as it can based on <see cref="T:Nest.ElasticsearchTypeAttribute" /> attributes set on the type.
@@ -23590,6 +23596,7 @@
     <member name="M:Nest.TypeMappingDescriptor`1.AutoMap(System.Int32)">
       <summary>
             Convenience method to map as much as it can based on <see cref="T:Nest.ElasticsearchTypeAttribute" /> attributes set on the type.
+            This particular overload is useful for automapping any children
             <pre>This method also automatically sets up mappings for known values types (int, long, double, datetime, etc)</pre><pre>Class types default to object and Enums to int</pre><pre>Later calls can override whatever is set is by this call.</pre></summary>
       <inheritdoc />
     </member>

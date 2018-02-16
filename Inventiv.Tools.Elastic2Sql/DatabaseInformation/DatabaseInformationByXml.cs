@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Inventiv.Tools.Elastic2Sql.Query;
+using System.Linq;
 
 namespace Inventiv.Tools.Elastic2Sql.DatabaseInformation
 {
@@ -18,14 +18,15 @@ namespace Inventiv.Tools.Elastic2Sql.DatabaseInformation
 
 		public string TableName => xmlReader.Table.Name.Value;
 
-		public List<string> Columns
+		public List<Column> Columns
 		{
 			get
 			{
-				var list = new List<string>();
+				var list = new List<Column>();
 				foreach (var column in xmlReader.Table.Columns.Column)
 				{
-					list.Add(column.Name.Value);
+					var type = GetType(column.Type.Value);
+					list.Add(new Column(column.Name.Value, type));
 				}
 
 				return list;
@@ -41,9 +42,9 @@ namespace Inventiv.Tools.Elastic2Sql.DatabaseInformation
 				{
 					list.Add(new QueryInfo
 					{
-						 FieldName = query.ColumnName.Value,
-						 QueryType = GetQueryTypeByName(query.QueryType.Value),
-						 Values = GetValues(query.ColumnValues)
+						FieldName = query.ColumnName.Value,
+						QueryType = GetQueryTypeByName(query.QueryType.Value),
+						Values = GetValues(query.ColumnValues)
 					});
 				}
 
@@ -68,6 +69,14 @@ namespace Inventiv.Tools.Elastic2Sql.DatabaseInformation
 			}
 
 			return list;
+		}
+
+		private Type GetType(string typeName)
+		{
+			var type = typeof(string).Assembly.GetTypes().FirstOrDefault(t => t.Namespace == "System" && t.Name == typeName);
+			if (type == null) { throw new Exception($"Not found type name in system types ({typeName})"); }
+
+			return Type.GetType($"System.{typeName}");
 		}
 
 		#endregion

@@ -1,25 +1,30 @@
 ﻿<elastic2sql>
 	<Elastic>
 		<Database>
-			<Name>framework_dev_0</Name>
+			<Name>acquiring_info_19</Name>
 		</Database>
 		<Table>
 			<Name>message</Name>
 			<Columns>
 				<Column>
 					<Name>service_name</Name>
+					<Type>String</Type>
 				</Column>
 				<Column>
 					<Name>service_request_id</Name>
+					<Type>String</Type>
 				</Column>
 				<Column>
 					<Name>timestamp</Name>
+					<Type>DateTime</Type>
 				</Column>
 				<Column>
 					<Name>duration</Name>
+					<Type>Int64</Type>
 				</Column>
 				<Column>
 					<Name>result</Name>
+					<Type>String</Type>
 				</Column>
 			</Columns>
 			<Queries>
@@ -34,5 +39,31 @@
 			</Queries>
 		</Table>
 	</Elastic>
-	<Sql></Sql>
+	<Sql>
+		<Table>
+			<Name>Graylog</Name>
+			<Columns>
+				<Column>
+					<Name>ServiceName</Name>
+					<Type>String</Type>
+				</Column>
+				<Column>
+					<Name>ServiceRequestId</Name>
+					<Type>Guid</Type>
+				</Column>
+				<Column>
+					<Name>ExecutionTime</Name>
+					<Type>DateTime</Type>
+				</Column>
+				<Column>
+					<Name>Duration</Name>
+					<Type>Single</Type>
+				</Column>
+				<Column>
+					<Name>ExecutionStatus</Name>
+					<Type>Byte</Type>
+				</Column>
+			</Columns>
+		</Table>
+	</Sql>
 </elastic2sql>

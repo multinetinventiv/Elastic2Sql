@@ -48,7 +48,7 @@ namespace Inventiv.Tools.Elastic2Sql
 		}
 
 		#endregion
-		
+
 		#region Sql Server Ado.Net
 
 		public static SqlConnection GetSqlConnection()

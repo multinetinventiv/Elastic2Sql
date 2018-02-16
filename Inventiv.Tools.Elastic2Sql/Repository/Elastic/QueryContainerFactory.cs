@@ -1,5 +1,5 @@
 ﻿using System;
-using Inventiv.Tools.Elastic2Sql.Query;
+using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 using Inventiv.Tools.Elastic2Sql.Repository.Elastic.QueryContainers;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic

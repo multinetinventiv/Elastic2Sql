@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Dynamic;
 using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
-using Inventiv.Tools.Elastic2Sql.Query;
 using Nest;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
@@ -89,11 +89,10 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.Elastic
 			}
 		}
 
-		public void Update(List<string> columnNames, params object[] values)
+		public void BulkInsert(DataTable values)
 		{
 			throw new NotImplementedException();
 		}
-
 	}
 
 }

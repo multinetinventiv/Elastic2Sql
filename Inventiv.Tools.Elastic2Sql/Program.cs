@@ -3,8 +3,10 @@ using System.Globalization;
 using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 using Inventiv.Tools.Elastic2Sql.DataTransporters;
 using Inventiv.Tools.Elastic2Sql.Helper;
+using Inventiv.Tools.Elastic2Sql.Mappers;
 using Inventiv.Tools.Elastic2Sql.Repository;
 using Inventiv.Tools.Elastic2Sql.Repository.Elastic;
+using Inventiv.Tools.Elastic2Sql.Repository.SqlServer;
 using Microsoft.Extensions.CommandLineUtils;
 
 namespace Inventiv.Tools.Elastic2Sql
@@ -15,15 +17,23 @@ namespace Inventiv.Tools.Elastic2Sql
 
 		public static void Main(string[] args)
 		{
-			var sourceDatabaseInformation = new DatabaseInformationByXml($".{Constants.MAPPING_XML_PATH}", RootNodeName.Elastic);
-			var sourceRepository = new ElasticRepository(sourceDatabaseInformation);
+			var xmlPath = $".{Constants.MAPPING_XML_PATH}";
+
+			var sourceDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Elastic);
+			var targetDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Sql);
+
+			var sourceRepository = new ElasticRepository(sourceDatabaseInformationByXml);
+			var targetRepository = new SqlServerRepository(targetDatabaseInformationByXml);
+			var mapper = new Elastic2SqlMapper(sourceDatabaseInformationByXml, targetDatabaseInformationByXml);
 
 			new Program(
 				sourceRepository
+				, targetRepository
+				, mapper
 				).Execute(args);
 		}
 
-		public Program(IRepository sourceRepository)
+		public Program(IRepository sourceRepository, IRepository targetRepository, IMapper mapper)
 		{
 			application = new CommandLineApplication
 			{
@@ -42,7 +52,7 @@ namespace Inventiv.Tools.Elastic2Sql
 				var parsedEndDate = DateTime.ParseExact(endDate.Value, Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture);
 				var parsedDataCount = Convert.ToInt32(dataCount.Value);
 
-				var dataTransporter = new DataTransporter(sourceRepository);
+				var dataTransporter = new DataTransporter(sourceRepository, targetRepository, mapper);
 				dataTransporter.Transport(parsedStartDate, parsedEndDate, parsedDataCount);
 				return 0;
 			});

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using Inventiv.Tools.Elastic2Sql.Query;
+using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 {

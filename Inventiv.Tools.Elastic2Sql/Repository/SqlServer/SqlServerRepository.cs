@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using Inventiv.Tools.Elastic2Sql.Query;
+using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 {
 	public class SqlServerRepository : IRepository
 	{
 		private readonly SqlConnection sqlConnection;
-		private readonly string tableName;
+		private readonly IDatabaseInformation databaseInformation;
 
-		public SqlServerRepository(string tableName)
+		public SqlServerRepository(IDatabaseInformation databaseInformation)
 		{
-			this.tableName = tableName;
+			this.databaseInformation = databaseInformation;
 			sqlConnection = Connection.GetSqlConnection();
 		}
 
@@ -23,7 +24,7 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 
 		public List<object> Get(List<QueryInfo> queryInformation, int takeCount, params object[] values)
 		{
-			var queryString = SqlQueryBuilder.BuildSelectQuery(queryInformation, tableName);
+			var queryString = SqlQueryBuilder.BuildSelectQuery(queryInformation, databaseInformation.TableName);
 			var parameters = SqlQueryBuilder.BuildSqlParameters(queryInformation);
 
 			var command = new SqlCommand(queryString, sqlConnection);
@@ -65,16 +66,39 @@ namespace Inventiv.Tools.Elastic2Sql.Repository.SqlServer
 
 		public void Insert(List<string> columnNames, params object[] values)
 		{
-			var insertQuery = SqlQueryBuilder.BuildInsertQuery(columnNames, tableName);
-			var parameters = SqlQueryBuilder.BuildInsertParameters(columnNames, values);
-
-			var command = new SqlCommand(insertQuery, sqlConnection);
-			//TODO
+			throw new NotImplementedException();
 		}
 
-		public void Update(List<string> columnNames, params object[] values)
+		public void BulkInsert(DataTable values)
 		{
-			throw new System.NotImplementedException();
+			sqlConnection.Open();
+			using (var transaction = sqlConnection.BeginTransaction())
+			{
+				try
+				{
+					using (var bulkCopy = new SqlBulkCopy(sqlConnection, SqlBulkCopyOptions.Default, transaction))
+					{
+						bulkCopy.DestinationTableName = databaseInformation.TableName;
+						
+						foreach (DataColumn dcPrepped in values.Columns)
+						{
+							bulkCopy.ColumnMappings.Add(dcPrepped.ColumnName, dcPrepped.ColumnName);
+						}
+
+						bulkCopy.WriteToServer(values);
+					}
+
+					transaction.Commit();
+					sqlConnection.Close();
+				}
+				catch(Exception ex)
+				{
+					transaction.Rollback();
+					sqlConnection.Close();
+
+					throw ex;
+				}
+			}
 		}
 	}
 }

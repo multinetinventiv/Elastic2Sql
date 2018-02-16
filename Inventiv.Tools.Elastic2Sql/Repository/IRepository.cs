@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Inventiv.Tools.Elastic2Sql.Query;
+using System.Data;
+using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 
 namespace Inventiv.Tools.Elastic2Sql.Repository
 {
@@ -9,6 +10,6 @@ namespace Inventiv.Tools.Elastic2Sql.Repository
 		List<object> Get(List<QueryInfo> queryInformation, int takeCount = 100, params object[] values);
 		List<object> Get(int takeCount = 100, params object[] values);
 		void Insert(List<string> columnNames, params object[] values);
-		void Update(List<string> columnNames, params object[] values);
+		void BulkInsert(DataTable values);
 	}
 }
