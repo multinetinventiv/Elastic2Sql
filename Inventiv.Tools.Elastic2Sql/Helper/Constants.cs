@@ -15,5 +15,6 @@ namespace Inventiv.Tools.Elastic2Sql.Helper
 		public const string DATETIME_FORMAT = "yyyyMMddHHmmss";
 
 		public const string MAPPING_XML_PATH = "/Mappings/Mapping.xml";
+		public const string SQL_SERVER_CONTEXT_NAME = "SqlServerContext";
 	}
 }

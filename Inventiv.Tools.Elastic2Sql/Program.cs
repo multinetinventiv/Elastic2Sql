@@ -2,8 +2,11 @@
 using System.Globalization;
 using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 using Inventiv.Tools.Elastic2Sql.DataTransporters;
+using Inventiv.Tools.Elastic2Sql.GenericRepository;
+using Inventiv.Tools.Elastic2Sql.GenericRepository.SqlServer;
 using Inventiv.Tools.Elastic2Sql.Helper;
 using Inventiv.Tools.Elastic2Sql.Mappers;
+using Inventiv.Tools.Elastic2Sql.Models;
 using Inventiv.Tools.Elastic2Sql.Repository;
 using Inventiv.Tools.Elastic2Sql.Repository.Elastic;
 using Inventiv.Tools.Elastic2Sql.Repository.SqlServer;
@@ -17,6 +20,8 @@ namespace Inventiv.Tools.Elastic2Sql
 
 		public static void Main(string[] args)
 		{
+			var configRepository = new SqlServerRepository<TransportHistory>();
+
 			var xmlPath = $".{Constants.MAPPING_XML_PATH}";
 
 			var sourceDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Elastic);
@@ -27,13 +32,14 @@ namespace Inventiv.Tools.Elastic2Sql
 			var mapper = new Elastic2SqlMapper(sourceDatabaseInformationByXml, targetDatabaseInformationByXml);
 
 			new Program(
-				sourceRepository
+				configRepository
+				, sourceRepository
 				, targetRepository
 				, mapper
 				).Execute(args);
 		}
 
-		public Program(IRepository sourceRepository, IRepository targetRepository, IMapper mapper)
+		public Program(IGenericRepository<TransportHistory> configRepository, IRepository sourceRepository, IRepository targetRepository, IMapper mapper)
 		{
 			application = new CommandLineApplication
 			{
@@ -47,15 +53,15 @@ namespace Inventiv.Tools.Elastic2Sql
 			var dataCount = application.Argument("dataCount", "The number of rows to move in one go");
 
 			application.OnExecute(() =>
-			{
-				var parsedStartDate = DateTime.ParseExact(startDate.Value, Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture);
-				var parsedEndDate = DateTime.ParseExact(endDate.Value, Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture);
-				var parsedDataCount = Convert.ToInt32(dataCount.Value);
+					{
+						var parsedStartDate = DateTime.ParseExact(startDate.Value, Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture);
+						var parsedEndDate = DateTime.ParseExact(endDate.Value, Constants.DATETIME_FORMAT, CultureInfo.InvariantCulture);
+						var parsedDataCount = Convert.ToInt32(dataCount.Value);
 
-				var dataTransporter = new DataTransporter(sourceRepository, targetRepository, mapper);
-				dataTransporter.Transport(parsedStartDate, parsedEndDate, parsedDataCount);
-				return 0;
-			});
+						var dataTransporter = new DataTransporter(configRepository, sourceRepository, targetRepository, mapper);
+						dataTransporter.Transport(parsedStartDate, parsedEndDate, parsedDataCount);
+						return 0;
+					});
 		}
 
 		public int Execute(params string[] args)
@@ -82,4 +88,5 @@ namespace Inventiv.Tools.Elastic2Sql
 
 		}
 	}
+
 }

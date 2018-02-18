@@ -9,7 +9,7 @@ using Nest;
 
 namespace Inventiv.Tools.Elastic2Sql
 {
-	public static class Connection
+	public class Connection
 	{
 		#region Fields
 
@@ -25,13 +25,17 @@ namespace Inventiv.Tools.Elastic2Sql
 
 			return GetElasticSearchClient(serverAddress);
 		}
+
 		public static ElasticClient GetElasticSearchClient(string serverAddress)
 		{
 			try
 			{
-				if (string.IsNullOrWhiteSpace(serverAddress)) { throw new ArgumentNullException(nameof(serverAddress), "Elasticsearch server address is null or empty"); }
+				if (string.IsNullOrWhiteSpace(serverAddress))
+				{
+					throw new ArgumentNullException(nameof(serverAddress), "Elasticsearch server address is null or empty");
+				}
 
-				var nodes = new[] { new Uri(serverAddress) };
+				var nodes = new[] {new Uri(serverAddress)};
 
 				var connectionPool = new StaticConnectionPool(nodes);
 				var connectionSettings = new ConnectionSettings(connectionPool)
@@ -77,12 +81,19 @@ namespace Inventiv.Tools.Elastic2Sql
 			return GetSqlConnection(dataSource, databaseName, false, username, password);
 		}
 
-		private static SqlConnection GetSqlConnection(string dataSource, string databaseName, bool integratedSecurity, string username = "", string password = "")
+		private static SqlConnection GetSqlConnection(string dataSource, string databaseName, bool integratedSecurity,
+			string username = "", string password = "")
 		{
 			try
 			{
-				if (string.IsNullOrWhiteSpace(dataSource) || string.IsNullOrWhiteSpace(databaseName)) { throw new Exception("Data source or database name are null or empty"); }
-				if (!integratedSecurity && (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))) { throw new Exception("Username or password are null or empty!"); }
+				if (string.IsNullOrWhiteSpace(dataSource) || string.IsNullOrWhiteSpace(databaseName))
+				{
+					throw new Exception("Data source or database name are null or empty");
+				}
+				if (!integratedSecurity && (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)))
+				{
+					throw new Exception("Username or password are null or empty!");
+				}
 
 				var connectionString = $"Data Source={dataSource};Initial Catalog={databaseName};";
 
@@ -99,12 +110,13 @@ namespace Inventiv.Tools.Elastic2Sql
 			}
 			catch (Exception e)
 			{
-				var message = "It is not created connection string by given information";
+				var message = "It is not created sql connection by given information";
 				logger.Fatal(message, e);
 				throw new Exception(message, e);
 			}
 		}
 
 		#endregion
+		
 	}
 }
