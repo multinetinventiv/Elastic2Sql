@@ -30,7 +30,7 @@ namespace Inventiv.Tools.Elastic2Sql.DataTransporters
 		{
 			try
 			{
-				if (endDate > startDate) { throw new Exception($"End Date({endDate}) cannot greater than start date({startDate})"); }
+				if (startDate > endDate) { throw new Exception($"End Date({endDate}) cannot less than start date({startDate})"); }
 
 				transportHistory = SetTransportInfo(startDate, endDate, transportHistory);
 
@@ -72,10 +72,10 @@ namespace Inventiv.Tools.Elastic2Sql.DataTransporters
 
 				#endregion
 
-				var executionDateOfLastRecord = GetExecutionDateOfLastRecord(targetValuesDt);
-				if (executionDateOfLastRecord == null) { throw new Exception("Cannot get execution date of last row!"); }
+				var maxDateOfRecords = GetMaxDateOfRecords(targetValuesDt);
+				if (maxDateOfRecords == null) { throw new Exception("Cannot get execution date of last row!"); }
 
-				Transport(executionDateOfLastRecord.Value, endDate, dataCount, transportHistory);
+				Transport(maxDateOfRecords.Value.AddMilliseconds(1), endDate, dataCount, transportHistory);
 			}
 			catch (Exception e)
 			{
@@ -87,6 +87,8 @@ namespace Inventiv.Tools.Elastic2Sql.DataTransporters
 				throw;
 			}
 		}
+
+		#region private
 
 		private void SetFailTransportationInfo(TransportHistory transportHistory, string message, Exception e)
 		{
@@ -126,19 +128,32 @@ namespace Inventiv.Tools.Elastic2Sql.DataTransporters
 		/// </summary>
 		/// <param name="dataTable"></param>
 		/// <returns></returns>
-		private DateTime? GetExecutionDateOfLastRecord(DataTable dataTable)
+		private DateTime? GetMaxDateOfRecords(DataTable dataTable)
 		{
-			var lastRow = dataTable.Rows[dataTable.Rows.Count - 1];
+			var maxDate = DateTime.MinValue;
 
-			foreach (DataColumn column in dataTable.Columns)
+			foreach (DataRow dr in dataTable.Rows)
 			{
-				if (column.DataType != typeof(DateTime)) { continue; }
 
-				return (DateTime)lastRow[column];
+				foreach (DataColumn column in dataTable.Columns)
+				{
+					if (column.DataType != typeof(DateTime))
+					{
+						continue;
+					}
+
+					var rowDate = (DateTime) dr[column];
+
+					maxDate = maxDate < rowDate ? rowDate : maxDate;
+				}
+
 			}
+			
+			if(maxDate == DateTime.MinValue) { return null; }
 
-			return null;
-
+			return maxDate;
 		}
+
+		#endregion
 	}
 }

@@ -141,7 +141,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>elastic2sql.mdf</DependentUpon>
     </Content>
-    <Content Include="Mappings\Mapping.xml">
+    <Content Include="Mappings\Acquiring_Error_Previous.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mappings\Acquiring_Error.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mappings\Acquiring_Sales_Previous.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mappings\Acquiring_Sales.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using Inventiv.Tools.Elastic2Sql.DatabaseInformation;
 using Inventiv.Tools.Elastic2Sql.DataTransporters;
 using Inventiv.Tools.Elastic2Sql.GenericRepository;
@@ -22,21 +25,22 @@ namespace Inventiv.Tools.Elastic2Sql
 		{
 			var configRepository = new SqlServerRepository<TransportHistory>();
 
-			var xmlPath = $".{Constants.MAPPING_XML_PATH}";
+			foreach (var xmlPath in GetXmlPaths())
+			{
+				var sourceDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Elastic);
+				var targetDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Sql);
 
-			var sourceDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Elastic);
-			var targetDatabaseInformationByXml = new DatabaseInformationByXml(xmlPath, RootNodeName.Sql);
+				var sourceRepository = new ElasticRepository(sourceDatabaseInformationByXml);
+				var targetRepository = new SqlServerRepository(targetDatabaseInformationByXml);
+				var mapper = new Elastic2SqlMapper(sourceDatabaseInformationByXml, targetDatabaseInformationByXml);
 
-			var sourceRepository = new ElasticRepository(sourceDatabaseInformationByXml);
-			var targetRepository = new SqlServerRepository(targetDatabaseInformationByXml);
-			var mapper = new Elastic2SqlMapper(sourceDatabaseInformationByXml, targetDatabaseInformationByXml);
-
-			new Program(
-				configRepository
-				, sourceRepository
-				, targetRepository
-				, mapper
+				new Program(
+					configRepository
+					, sourceRepository
+					, targetRepository
+					, mapper
 				).Execute(args);
+			}
 		}
 
 		public Program(IGenericRepository<TransportHistory> configRepository, IRepository sourceRepository, IRepository targetRepository, IMapper mapper)
@@ -87,6 +91,12 @@ namespace Inventiv.Tools.Elastic2Sql
 			}
 
 		}
+
+		private static List<string> GetXmlPaths()
+		{
+			return Directory.GetFiles(".\\Mappings", "*.xml").Select(Path.GetFullPath).ToList();
+		}
+
 	}
 
 }
