@@ -92,7 +92,7 @@ namespace Inventiv.Tools.Elastic2Sql
 
 		}
 
-		private static List<string> GetXmlPaths()
+		private static IEnumerable<string> GetXmlPaths()
 		{
 			return Directory.GetFiles(".\\Mappings", "*.xml").Select(Path.GetFullPath).ToList();
 		}
